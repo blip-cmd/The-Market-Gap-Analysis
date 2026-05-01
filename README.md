@@ -99,7 +99,7 @@ You have the flexibility to choose your development environment:
 Please edit this `README.md` file in your forked repository to include the following three sections at the top:
 
 ### A. The Executive Summary
-* A 3-5 sentence summary of your findings.
+* I analysed a randomised sample of 200,000 records from the Open Food Facts dataset to find a Blue Ocean for Helix CPG Partners. Most traditional snacks have 30% of their weight as pure sugar. My analysis shows that Plant-based snacks are the most efficient category for delivering high protein with low sugar. However, my ingredient mining found that these current products rely heavily on salt and wheat as fillers. The biggest opportunity is to create a high-protein, low-sugar plant-based snack targeting people who would take in little sodium.
 
 ### B. Project Links
 * **Link to Notebook:** (e.g., Google Colab, etc.). *Ensure sharing permissions are set to "Anyone with the link can view".*
@@ -107,8 +107,8 @@ Please edit this `README.md` file in your forked repository to include the follo
 * **Link to Presentation:** A link to a short slide deck (PDF, PPT) AND (Optional) a 2-minute video walkthrough (YouTube) explaining your results.
 
 ### C. Technical Explanation
-* Briefly explain how you handled the "Data Cleaning".
-* Explain your "Candidate's Choice" addition.
+* To handle the massive 12GB dataset efficiently, I streamed the first 500,000 rows directly from the source URL using the nrows parameter in Pandas. This allowed me to perform a randomized shuffle to extract a representative 200,000-row subset without exceeding memory limits. I cleaned the data by enforcing biological boundaries where sugars and proteins must be between $0$ and $100$ grams per 100g. I also dropped any records missing critical names or nutritional values because imputing that data would introduce bias into a gap analysis. To ensure I understood the schema before filtering, I consulted the official field descriptions. Comparing this to the project user stories which require a focused "Market Gap" study for the snack aisle, I selected five high-level business buckets (Snacks, Beverages, Dairy, Plant-based, and Cereals) using keyword matching on the categories_tags. This approach allowed me to ignore "noise" like pet food or raw commodities and focus strictly on the consumer packaged goods relevant to the client.
+* I added two specific features to differentiate my analysis and provide deeper value to the stakeholders. I created a Nutrient Density Score calculated as $Protein/(Sugar + 1)$ to help the client identify which categories are the most efficient at delivering nutrition without the typical sugar overhead found in processed foods. Additionally, I built a variable ingredient mining function using Regular Expressions to parse the unstructured ingredients_text field. By setting the Top N count as a variable, the analysis can be easily adjusted to different depths of research. This process revealed that salt is the most common ingredient in high-protein plant-based clusters. This provides a critical business insight by showing that even healthy snacks have a hidden sodium problem that the client can solve to further differentiate their product.
 
 **Important Note on Code Submission:**
 * Upload your `.ipynb` notebook file to the repo.
