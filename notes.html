@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Speaker Notes - Helix CPG</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lucide/0.263.0/lucide.min.js"></script>
+    <style>
+        :root {
+            --bg: #ffffff;
+            --primary: #1a3a3a;
+            --accent: #a67c00;
+            --text: #2c3e50;
+            --muted: #7f8c8d;
+            --border: #ecf0f1;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body { 
+            background: var(--bg); 
+            color: var(--text);
+            font-family: 'Inter', sans-serif;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        header {
+            padding: 30px 50px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .slide-info {
+            font-family: 'Outfit', sans-serif;
+        }
+
+        .slide-num {
+            color: var(--accent);
+            font-weight: 700;
+            font-size: 1.2rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .slide-title {
+            font-size: 1.8rem;
+            color: var(--primary);
+            font-weight: 700;
+            margin-top: 5px;
+        }
+
+        main {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 50px;
+            background: #fdfdfd;
+        }
+
+        .notes-container {
+            max-width: 1000px;
+            width: 100%;
+            text-align: center;
+        }
+
+        .notes-text {
+            font-size: 2.4rem;
+            line-height: 1.5;
+            color: var(--primary);
+            font-weight: 500;
+            transition: opacity 0.3s ease;
+        }
+
+        footer {
+            padding: 30px 50px;
+            border-top: 1px solid var(--border);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 40px;
+        }
+
+        .nav-btn {
+            background: var(--primary);
+            border: none;
+            color: white;
+            padding: 15px 30px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.2s;
+        }
+
+        .nav-btn:hover { background: var(--accent); transform: translateY(-2px); }
+        .nav-btn:disabled { opacity: 0.3; cursor: not-allowed; transform: none; }
+
+        .total-info {
+            color: var(--muted);
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="slide-info">
+            <div class="slide-num" id="slide-num-label">Slide 1</div>
+            <div class="slide-title" id="slide-title">The Market Gap Analysis</div>
+        </div>
+        <div class="total-info">Total Slides: 11</div>
+    </header>
+
+    <main>
+        <div class="notes-container">
+            <div class="notes-text" id="notes-content">
+                Welcome stakeholders. I am presenting the Helix CPG Sugar Trap analysis. Our goal is to identify exactly where consumer demand for health meets a lack of current market supply.
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <button class="nav-btn" onclick="prevSlide()" id="prev-btn">
+            <i data-lucide="chevron-left"></i> Previous
+        </button>
+        <button class="nav-btn" onclick="nextSlide()" id="next-btn">
+            Next <i data-lucide="chevron-right"></i>
+        </button>
+    </footer>
+
+    <script>
+        let currentSlide = 1;
+        const totalSlides = 11;
+
+        const data = [
+            { title: "The Market Gap Analysis", note: "Welcome stakeholders. I am presenting the Helix CPG Sugar Trap analysis. Our goal is to identify exactly where consumer demand for health meets a lack of current market supply." },
+            { title: "Finding A New Demand", note: "The snack aisle is currently a Sugar Trap. We are searching for the Blue Ocean: the rare space where high nutrition meets low consumer overhead." },
+            { title: "Market Spending Patterns", note: "Traditional categories like snacks and cereals dominate shelf space, but high volume does not equal efficiency. There is a massive nutritional deficit in the current market leaders." },
+            { title: "Nutritional Value for Money", note: "We used a Nutrient Density Score to calculate protein delivery relative to sugar content. Plant-based products lead the market by 40% in this metric." },
+            { title: "The Hidden Sugar Surplus", note: "The average snack is 30% sugar by weight. We call this the trap. Our analysis shows we can pivot away from this without losing protein integrity." },
+            { title: "Defining The Blue Ocean", note: "By mapping thousands of products, we found an Empty Quadrant where current players fail to deliver high protein and low sugar simultaneously." },
+            { title: "Strategic R&D Directive", note: "The data indicates a high-conviction opportunity in Plant-based snacks, with a strategic target of 4.2g protein and a sugar ceiling of 4.6g." },
+            { title: "The Hidden Gem Factors", note: "Our competitive advantage is sodium. Current leaders hide high salt content behind a healthy label. We will solve this hidden barrier." },
+            { title: "Data Engineering Rigor", note: "Technically, we processed 12GB of data using chunked streaming to ensure RAM efficiency and 99% statistical confidence." },
+            { title: "Resources", note: "The interactive dashboard and full technical notebook are available to verify these insights." },
+            { title: "Bridging the Gap", note: "This project bridges the gap between academic rigor and practical, market-ready data engineering for Helix CPG Partners." }
+        ];
+
+        function updateUI(fromSync = false) {
+            const slide = data[currentSlide - 1];
+            
+            const textEl = document.getElementById('notes-content');
+            textEl.style.opacity = 0;
+            
+            setTimeout(() => {
+                document.getElementById('slide-num-label').innerText = `Slide ${currentSlide}`;
+                document.getElementById('slide-title').innerText = slide.title;
+                textEl.innerText = slide.note;
+                textEl.style.opacity = 1;
+                
+                document.getElementById('prev-btn').disabled = currentSlide === 1;
+                document.getElementById('next-btn').disabled = currentSlide === totalSlides;
+            }, 150);
+
+            if (!fromSync) {
+                localStorage.setItem('helix-slide', currentSlide);
+            }
+        }
+
+        function nextSlide() { if (currentSlide < totalSlides) { currentSlide++; updateUI(); } }
+        function prevSlide() { if (currentSlide > 1) { currentSlide--; updateUI(); } }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            lucide.createIcons();
+            const saved = localStorage.getItem('helix-slide');
+            if (saved) currentSlide = parseInt(saved);
+            updateUI();
+        });
+
+        window.addEventListener('storage', (e) => {
+            if (e.key === 'helix-slide') {
+                currentSlide = parseInt(e.newValue);
+                updateUI(true);
+            }
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); nextSlide(); }
+            else if (e.key === 'ArrowLeft') { e.preventDefault(); prevSlide(); }
+        });
+    </script>
+</body>
+</html>
