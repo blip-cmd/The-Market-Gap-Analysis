@@ -12,7 +12,7 @@
 * **Code Notebook:** [GitHub](https://github.com/blip-cmd/The-Market-Gap-Analysis/blob/main/notebook_v2.ipynb) 
 * **Interactive Dashboard:** [Data Studio](https://datastudio.google.com/reporting/34881442-2f4f-48c8-a6eb-f5186f5a4d28)
 * **Presentation:** [Live Strategy](https://the-market-gap-analysis.vercel.app/) 
-* **Executive Summary Video:** [YouTube-pending](https://youtu.be/)
+* **Executive Summary Video:** [YouTube](https://youtu.be/yhNVJgISP4E)
 
 
 
