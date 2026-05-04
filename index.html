@@ -32,7 +32,12 @@
             box-sizing: border-box; 
         }
         
-        body { 
+        html, body { 
+            height: 100%;
+            width: 100%;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
             background: var(--bg-main);
             background-image: 
                 radial-gradient(at 0% 0%, rgba(197, 160, 40, 0.05) 0px, transparent 50%),
@@ -70,21 +75,31 @@
             padding: 60px 10%;
             display: flex;
             flex-direction: column;
-            justify-content: center;
+            overflow-y: auto;
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start; /* Start from top to handle scrolling better */
             align-items: center;
             text-align: left;
             position: relative;
             opacity: 0;
             visibility: hidden;
             transition: opacity 0.6s ease, visibility 0.6s;
-            overflow-y: auto;
             background-image: url('https://www.transparenttextures.com/patterns/cubes.png');
             background-blend-mode: overlay;
         }
 
-        .slide > * {
+        /* Inner wrapper to maintain centering while allowing scroll */
+        .slide-content {
             width: 100%;
             max-width: 1000px;
+            margin: auto; /* This handles centering better than justify-content */
+            padding: 60px 0 100px 0; /* Extra bottom padding for controls */
+        }
+
+        .slide-content > * {
+            width: 100%;
         }
 
         .slide::after {
@@ -105,8 +120,9 @@
             background-image: var(--title-bg), url('assets/presentation_bg_light.png');
             background-size: cover;
             background-position: center;
-            justify-content: center;
-            align-items: center;
+        }
+
+        #slide-1 .slide-content {
             text-align: center;
         }
 
@@ -122,8 +138,8 @@
         }
 
         h2 { 
-            font-size: 2.8rem;
-            margin-bottom: 40px;
+            font-size: clamp(2rem, 5vw, 2.8rem);
+            margin-bottom: 30px;
             color: var(--primary);
             position: relative;
             display: inline-block;
@@ -157,7 +173,7 @@
 
         .card { 
             background: var(--bg-card); 
-            padding: 40px; 
+            padding: clamp(20px, 4vw, 40px); 
             border-radius: 24px;
             border: 1px solid var(--glass-border);
             backdrop-filter: blur(12px);
@@ -293,7 +309,7 @@
     <div class="slide-container" id="slide-container">
         <!-- Slide 1 -->
         <div class="slide active" id="slide-1">
-            <div class="animate-up">
+            <div class="slide-content animate-up">
                 <p class="context-label">Helix CPG Partners</p>
                 <h1>The Sugar Trap Analysis</h1>
                 <p style="font-size: 1.6rem; color: var(--primary); font-weight: 500;">Strategic Market Research: <span style="color: var(--accent);">Ryan Nii Akwei Brown</span></p>
@@ -303,148 +319,168 @@
 
         <!-- Slide 2 -->
         <div class="slide" id="slide-2">
-            <h2 class="animate-up">Locating the Blue Ocean</h2>
-            <div class="grid-2">
-                <div class="animate-up delay-1">
-                    <p>The snack market is currently saturated with sugary treats. Our mission: find the intersection of high nutritional value and low consumer overhead.</p>
-                    <div class="card" style="margin-top: 20px;">
-                        <h3>Core Research Question</h3>
-                        <p style="font-size: 1.4rem; color: var(--primary);">Where is the gap in the snack aisle where demand for health is not being met by current inventory?</p>
+            <div class="slide-content">
+                <h2 class="animate-up">Locating the Blue Ocean</h2>
+                <div class="grid-2">
+                    <div class="animate-up delay-1">
+                        <p>The snack market is currently saturated with sugary treats. Our mission: find the intersection of high nutritional value and low consumer overhead.</p>
+                        <div class="card" style="margin-top: 20px;">
+                            <h3>Core Research Question</h3>
+                            <p style="font-size: 1.4rem; color: var(--primary);">Where is the gap in the snack aisle where demand for health is not being met by current inventory?</p>
+                        </div>
                     </div>
-                </div>
-                <div class="card animate-up delay-2">
-                    <h3><i data-lucide="shield-check"></i> Strategic Focus</h3>
-                    <ul>
-                        <li><span class="highlight-text">High Protein</span> Delivery</li>
-                        <li><span class="highlight-text">Low Sugar</span> Concentration</li>
-                        <li>Plant-based Efficiency</li>
-                        <li>Low Sodium Integrity</li>
-                    </ul>
+                    <div class="card animate-up delay-2">
+                        <h3><i data-lucide="shield-check"></i> Strategic Focus</h3>
+                        <ul>
+                            <li><span class="highlight-text">High Protein</span> Delivery</li>
+                            <li><span class="highlight-text">Low Sugar</span> Concentration</li>
+                            <li>Plant-based Efficiency</li>
+                            <li>Low Sodium Integrity</li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
 
         <!-- Slide 3: The Data Landscape -->
         <div class="slide" id="slide-3">
-            <h2 class="animate-up">Market Volume vs. Efficiency</h2>
-            <div class="grid-2">
-                <div class="card animate-up delay-1">
-                    <h3><i data-lucide="bar-chart-3"></i> Volume Observations</h3>
-                    <p>While traditional snack categories maintain high market volume, they fail to meet the rising consumer demand for nutritional integrity.</p>
-                </div>
-                <div class="card animate-up delay-2">
-                    <h3><i data-lucide="layers"></i> Data Scope</h3>
-                    <p>Analyzed <span class="highlight-text">200,000 plus records</span> from Open Food Facts to identify how volume correlates with sugar across major categories.</p>
+            <div class="slide-content">
+                <h2 class="animate-up">Market Volume vs. Efficiency</h2>
+                <div class="grid-2">
+                    <div class="card animate-up delay-1">
+                        <h3><i data-lucide="bar-chart-3"></i> Volume Observations</h3>
+                        <p>While traditional snack categories maintain high market volume, they fail to meet the rising consumer demand for nutritional integrity.</p>
+                    </div>
+                    <div class="card animate-up delay-2">
+                        <h3><i data-lucide="layers"></i> Data Scope</h3>
+                        <p>Analyzed <span class="highlight-text">200,000 plus records</span> from Open Food Facts to identify how volume correlates with sugar across major categories.</p>
+                    </div>
                 </div>
             </div>
         </div>
 
         <!-- Slide 4: Nutritional Efficiency -->
         <div class="slide" id="slide-4">
-            <h2 class="animate-up">Nutritional Value for Money</h2>
-            <p class="animate-up delay-1">Using a custom Nutrient Density Score, we identified which categories deliver the most protein per gram of sugar added.</p>
-            <div class="formula-box animate-up delay-2">
-                Score = Proteins / (Sugars + 1)
-            </div>
-            <div class="card animate-up delay-3">
-                <p style="margin-bottom: 0;"><strong style="color: var(--accent);">Key Finding:</strong> Plant-based products lead the market by 40% in nutritional efficiency.</p>
+            <div class="slide-content">
+                <h2 class="animate-up">Nutritional Efficiency</h2>
+                <p class="animate-up delay-1">Using a custom Nutrient Density Score, we identified which categories deliver the most protein per gram of sugar added.</p>
+                <div class="formula-box animate-up delay-2">
+                    Score = Proteins / (Sugars + 1)
+                </div>
+                <div class="card animate-up delay-3">
+                    <p style="margin-bottom: 0;"><strong style="color: var(--accent);">Key Finding:</strong> Plant-based products lead the market by 40% in nutritional efficiency.</p>
+                </div>
             </div>
         </div>
 
         <!-- Slide 5: The Sugar Trap -->
         <div class="slide" id="slide-5">
-            <h2 class="animate-up">The Hidden Sugar Surplus</h2>
-            <div class="grid-2">
-                <div class="card animate-up delay-1">
-                    <h3><i data-lucide="alert-circle"></i> The Snack Baseline</h3>
-                    <p>The average snack in the dataset carries approximately <span class="highlight-text">30g of sugar per 100g</span>. This baseline represents a significant nutritional deficit.</p>
-                </div>
-                <div class="card animate-up delay-2">
-                    <h3><i data-lucide="move-right"></i> The Strategic Pivot</h3>
-                    <p>Analysis shows a dramatic decline in sugar concentration as we pivot toward <span class="highlight-text">plant-based alternatives</span>.</p>
+            <div class="slide-content">
+                <h2 class="animate-up">The Hidden Sugar Surplus</h2>
+                <div class="grid-2">
+                    <div class="card animate-up delay-1">
+                        <h3><i data-lucide="alert-circle"></i> The Snack Baseline</h3>
+                        <p>The average snack in the dataset carries approximately <span class="highlight-text">30g of sugar per 100g</span>. This baseline represents a significant nutritional deficit.</p>
+                    </div>
+                    <div class="card animate-up delay-2">
+                        <h3><i data-lucide="move-right"></i> The Strategic Pivot</h3>
+                        <p>Analysis shows a dramatic decline in sugar concentration as we pivot toward <span class="highlight-text">plant-based alternatives</span>.</p>
+                    </div>
                 </div>
             </div>
         </div>
 
         <!-- Slide 6: The Blue Ocean -->
         <div class="slide" id="slide-6">
-            <h2 class="animate-up">Defining The Blue Ocean</h2>
-            <div class="card animate-up delay-1" style="border-left: 8px solid var(--accent);">
-                <h3><i data-lucide="map"></i> Target Quadrant</h3>
-                <p style="font-size: 2.2rem; color: var(--primary); margin-bottom: 10px; font-weight: 700;">Protein > <span style="color: var(--accent);">4.2g</span> and Sugar < <span style="color: var(--accent);">4.6g</span></p>
-                <p>We found a specific Empty Quadrant where current market players fail to deliver high protein and low sugar simultaneously.</p>
+            <div class="slide-content">
+                <h2 class="animate-up">Defining The Blue Ocean</h2>
+                <div class="card animate-up delay-1" style="border-left: 8px solid var(--accent);">
+                    <h3><i data-lucide="map"></i> Target Quadrant</h3>
+                    <p style="font-size: clamp(1.5rem, 6vw, 2.2rem); color: var(--primary); margin-bottom: 10px; font-weight: 700;">Protein > <span style="color: var(--accent);">4.2g</span> & Sugar < <span style="color: var(--accent);">4.6g</span></p>
+                    <p>We found a specific Empty Quadrant where current market players fail to deliver high protein and low sugar simultaneously.</p>
+                </div>
             </div>
         </div>
 
         <div class="slide" id="slide-7">
-            <h2 class="animate-up">Strategic R&D Directive</h2>
-            <div class="card animate-up delay-1">
-                <p style="font-size: 1.8rem; color: var(--primary); line-height: 1.4; font-weight: 600;">
-                    <i data-lucide="lightbulb" style="color: var(--accent); margin-right: 15px;"></i> 
-                    The data indicates a <span class="highlight-text">high-conviction opportunity</span> in Plant-based snacks, with a strategic target of <span style="color: var(--accent);">4.2g protein</span> and a sugar ceiling of <span style="color: var(--accent);">4.6g</span>.
-                </p>
-            </div>
-            <div class="grid-2 animate-up delay-2">
-                <div>
-                    <h3 style="color: var(--accent);"><i data-lucide="award"></i> Competitive Edge</h3>
-                    <p>Current high-protein leaders rely heavily on sodium. Our goal: Low Sugar + High Protein + <span class="highlight-text">Low Sodium</span>.</p>
+            <div class="slide-content">
+                <h2 class="animate-up">Strategic R&D Directive</h2>
+                <div class="card animate-up delay-1">
+                    <p style="font-size: clamp(1.2rem, 4vw, 1.8rem); color: var(--primary); line-height: 1.4; font-weight: 600;">
+                        <i data-lucide="lightbulb" style="color: var(--accent); margin-right: 15px;"></i> 
+                        High-conviction opportunity in Plant-based snacks: target <span style="color: var(--accent);">4.2g protein</span> and <span style="color: var(--accent);">4.6g sugar</span> ceiling.
+                    </p>
+                </div>
+                <div class="grid-2 animate-up delay-2" style="margin-top: 20px;">
+                    <div>
+                        <h3 style="color: var(--accent);"><i data-lucide="award"></i> Competitive Edge</h3>
+                        <p>Current high-protein leaders rely heavily on sodium. Our goal: Low Sugar + High Protein + <span class="highlight-text">Low Sodium</span>.</p>
+                    </div>
                 </div>
             </div>
         </div>
 
         <!-- Slide 8: Hidden Gem Findings -->
         <div class="slide" id="slide-8">
-            <h2 class="animate-up">Hidden Gem Factors</h2>
-            <div class="grid-2">
-                <div class="card animate-up delay-1">
-                    <h3><i data-lucide="search"></i> Protein Foundations</h3>
-                    <p>Mining ingredient text revealed that existing leaders rely on <span class="highlight-text">Soy, Peanuts, and Wheat Gluten</span>.</p>
-                </div>
-                <div class="card animate-up delay-2">
-                    <h3><i data-lucide="shield-alert"></i> The Sodium Barrier</h3>
-                    <p>High salt content is the hidden ingredient in current snacks. Solving this is our <span class="highlight-text">true competitive advantage</span>.</p>
+            <div class="slide-content">
+                <h2 class="animate-up">Hidden Gem Factors</h2>
+                <div class="grid-2">
+                    <div class="card animate-up delay-1">
+                        <h3><i data-lucide="search"></i> Protein Foundations</h3>
+                        <p>Mining ingredient text revealed that existing leaders rely on <span class="highlight-text">Soy, Peanuts, and Wheat Gluten</span>.</p>
+                    </div>
+                    <div class="card animate-up delay-2">
+                        <h3><i data-lucide="shield-alert"></i> The Sodium Barrier</h3>
+                        <p>High salt content is the hidden ingredient in current snacks. Solving this is our <span class="highlight-text">true competitive advantage</span>.</p>
+                    </div>
                 </div>
             </div>
         </div>
 
         <!-- Slide 9: Technical Execution -->
         <div class="slide" id="slide-9">
-            <h2 class="animate-up">Data Engineering Rigor</h2>
-            <div class="card animate-up delay-1">
-                <h3><i data-lucide="database"></i> System Integrity</h3>
-                <ul style="line-height: 2.2;">
-                    <li><span class="highlight-text">RAM-Safe Ingestion:</span> 12GB data processed with chunked streaming.</li>
-                    <li><span class="highlight-text">Biological Bound Filtering:</span> Enforced strict 0-100g ranges.</li>
-                    <li><span class="highlight-text">Statistical Confidence:</span> Randomized sampling guarantees 99% confidence.</li>
-                </ul>
+            <div class="slide-content">
+                <h2 class="animate-up">Data Engineering Rigor</h2>
+                <div class="card animate-up delay-1">
+                    <h3><i data-lucide="database"></i> System Integrity</h3>
+                    <ul style="line-height: 2.2;">
+                        <li><span class="highlight-text">RAM-Safe Ingestion:</span> 12GB data processed with chunked streaming.</li>
+                        <li><span class="highlight-text">Biological Bound Filtering:</span> Enforced strict 0-100g ranges.</li>
+                        <li><span class="highlight-text">Statistical Confidence:</span> Randomized sampling guarantees 99% confidence.</li>
+                    </ul>
+                </div>
             </div>
         </div>
 
         <!-- Slide 10: Connectivity -->
         <div class="slide" id="slide-10">
-            <h2 class="animate-up">Resources</h2>
-            <p class="animate-up delay-1">Explore the raw code, technical documentation, and the interactive dashboard.</p>
-            <div class="link-container animate-up delay-2">
-                <a href="https://github.com/blip-cmd/The-Market-Gap-Analysis/blob/main/notebook_v2.ipynb" class="btn" target="_blank">
-                    <i data-lucide="code"></i> Code Notebook
-                </a>
-                <a href="https://datastudio.google.com/reporting/34881442-2f4f-48c8-a6eb-f5186f5a4d28" class="btn" target="_blank">
-                    <i data-lucide="layout-dashboard"></i> Interactive Dashboard
-                </a>
-                <a href="https://the-market-gap-analysis.vercel.app/" class="btn" target="_blank">
-                    <i data-lucide="external-link"></i> Live Strategy
-                </a>
+            <div class="slide-content">
+                <h2 class="animate-up">Resources</h2>
+                <p class="animate-up delay-1">Explore the raw code, technical documentation, and the interactive dashboard.</p>
+                <div class="link-container animate-up delay-2">
+                    <a href="https://github.com/blip-cmd/The-Market-Gap-Analysis/blob/main/notebook_v2.ipynb" class="btn" target="_blank">
+                        <i data-lucide="code"></i> Code Notebook
+                    </a>
+                    <a href="https://datastudio.google.com/reporting/34881442-2f4f-48c8-a6eb-f5186f5a4d28" class="btn" target="_blank">
+                        <i data-lucide="layout-dashboard"></i> Interactive Dashboard
+                    </a>
+                    <a href="https://the-market-gap-analysis.vercel.app/" class="btn" target="_blank">
+                        <i data-lucide="external-link"></i> Live Strategy
+                    </a>
+                </div>
             </div>
         </div>
 
         <!-- Slide 11: Closing -->
         <div class="slide" id="slide-11">
-            <h2 class="animate-up">Bridging the Gap</h2>
-            <div style="margin-top: 40px;" class="animate-up delay-1">
-                <p style="font-size: 1.8rem; color: var(--primary);">I have aimed to bridge the gap between academic rigor, specialized skill training, and practical market-ready data engineering.</p>
-                <div style="margin-top: 60px; border-top: 1px solid var(--glass-border); padding-top: 30px;">
-                    <p style="font-size: 1.5rem; color: var(--accent); margin-bottom: 5px; font-weight: 700;">Ryan Nii Akwei Brown</p>
-                    <p>Data Engineering Applicant</p>
+            <div class="slide-content">
+                <h2 class="animate-up">Bridging the Gap</h2>
+                <div style="margin-top: 40px;" class="animate-up delay-1">
+                    <p style="font-size: 1.8rem; color: var(--primary);">I have aimed to bridge the gap between academic rigor, specialized skill training, and practical market-ready data engineering.</p>
+                    <div style="margin-top: 60px; border-top: 1px solid var(--glass-border); padding-top: 30px;">
+                        <p style="font-size: 1.5rem; color: var(--accent); margin-bottom: 5px; font-weight: 700;">Ryan Nii Akwei Brown</p>
+                        <p>Data Engineering Applicant</p>
+                    </div>
                 </div>
             </div>
         </div>
