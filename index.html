@@ -72,7 +72,7 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            text-align: center;
+            text-align: left;
             position: relative;
             opacity: 0;
             visibility: hidden;
@@ -80,6 +80,11 @@
             overflow-y: auto;
             background-image: url('https://www.transparenttextures.com/patterns/cubes.png');
             background-blend-mode: overlay;
+        }
+
+        .slide > * {
+            width: 100%;
+            max-width: 1000px;
         }
 
         .slide::after {
